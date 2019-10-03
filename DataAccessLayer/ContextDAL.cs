@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace DataAccessLayer
 {
-    public class ContextDAL : IDisposable
+    public class ContextDAL : IDisposable 
     {
         #region Context stuff
         SqlConnection _con = new SqlConnection();
