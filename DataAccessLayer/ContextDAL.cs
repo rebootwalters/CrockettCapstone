@@ -198,6 +198,186 @@ namespace DataAccessLayer
 
         #endregion role stuff
 
+        #region user stuff
+        public UserDAL UserFindByID(int UserID)
+        {
+            UserDAL proposedReturnValue = null;
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserFindByID", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", UserID);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    UserMapper rm = new UserMapper(reader);
+                    int count = 0;
+                    while (reader.Read())
+                    {
+                        proposedReturnValue = rm.ToUser(reader);
+                        count++;
+                    }
+                    if (count > 1)
+                    {
+                        throw new Exception($"{count} Multiple Users found for ID {UserID}");
+                    }
+
+                }
+            }
+            return proposedReturnValue;
+        }
+        public List<UserDAL> UserGetAll(int Skip, int Take)
+        {
+            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UsersGetAll", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@skip", Skip);
+                command.Parameters.AddWithValue("@take", Take);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    UserMapper rm = new UserMapper(reader);
+
+                    while (reader.Read())
+                    {
+                        UserDAL item = rm.ToUser(reader);
+                        proposedReturnValue.Add(item);
+
+                    }
+                }
+            }
+            return proposedReturnValue;
+        }
+        public List<UserDAL> UserGetRelatedToRoleID(int RoleID,int Skip, int Take)
+        {
+            List<UserDAL> proposedReturnValue = new List<UserDAL>();
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UsersGetRelatedToRoleID", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@skip", Skip);
+                command.Parameters.AddWithValue("@take", Take);
+                command.Parameters.AddWithValue("@RoleID", RoleID);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    UserMapper rm = new UserMapper(reader);
+
+                    while (reader.Read())
+                    {
+                        UserDAL item = rm.ToUser(reader);
+                        proposedReturnValue.Add(item);
+
+                    }
+                }
+            }
+            return proposedReturnValue;
+        }
+        public int UsersObtainCount()
+        {
+            int proposedReturnValue = 0;
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UsersObtainCount", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                proposedReturnValue = (int)command.ExecuteScalar();
+            }
+            return proposedReturnValue;
+        }
+        // returns the new id in an output parameter
+        public int UserCreate(string EMail, string Hash, string Salt, int RoleID)
+        {
+            int proposedReturnValue = 0;
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserCreate", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", 0);
+                command.Parameters.AddWithValue("@Hash", Hash);
+                command.Parameters.AddWithValue("@Salt", Salt);
+                command.Parameters.AddWithValue("@RoleID", RoleID);
+                command.Parameters.AddWithValue("@EMail", EMail);
+                command.Parameters["@UserID"].Direction = System.Data.ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                proposedReturnValue = (int)command.Parameters["@UserID"].Value;
+            }
+            return proposedReturnValue;
+        }
+        // returns the new id as a scaler
+        public int UserCreateIDReturned(string EMail, string Hash, string Salt, int RoleID)
+        {
+            int proposedReturnValue = 0;
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserCreateIDReturned", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@Hash", Hash);
+                command.Parameters.AddWithValue("@Salt", Salt);
+                command.Parameters.AddWithValue("@RoleID", RoleID);
+                command.Parameters.AddWithValue("@EMail", EMail);
+
+                proposedReturnValue = Convert.ToInt32(command.ExecuteScalar());
+            }
+            return proposedReturnValue;
+        }
+        public void UserDelete(int UserID)
+        {
+
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserDelete", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", UserID);
+                command.ExecuteNonQuery();
+
+
+            }
+
+        }
+        public void UserUpdateJust(int UserID, string EMail, string Hash, string Salt, int RoleID)
+        {
+
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserUpdateJust", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", UserID);
+                command.Parameters.AddWithValue("@Hash", Hash);
+                command.Parameters.AddWithValue("@Salt", Salt);
+                command.Parameters.AddWithValue("@RoleID", RoleID);
+                command.Parameters.AddWithValue("@EMail", EMail);
+                object datareturned = command.ExecuteNonQuery();
+
+
+            }
+
+        }
+        public int UserUpdateSafe(int UserID, 
+            string OldEMail, string OldHash, string OldSalt, int OldRoleID, 
+            string NewEMail, string NewHash, string NewSalt, int NewRoleID)
+        {
+
+            EnsureConnected();
+            using (SqlCommand command = new SqlCommand("UserUpdateSafe", _con))
+            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@UserID", UserID);
+                command.Parameters.AddWithValue("@OldHash", OldHash);
+                command.Parameters.AddWithValue("@OldSalt", OldSalt);
+                command.Parameters.AddWithValue("@OldRoleID", OldRoleID);
+                command.Parameters.AddWithValue("@OldEMail", OldEMail);
+                command.Parameters.AddWithValue("@NewHash", NewHash);
+                command.Parameters.AddWithValue("@NewSalt", NewSalt);
+                command.Parameters.AddWithValue("@NewRoleID", NewRoleID);
+                command.Parameters.AddWithValue("@NewEMail", NewEMail);
+                return command.ExecuteNonQuery();
+
+
+            }
+
+        }
+        #endregion
+
 
     }
 }
