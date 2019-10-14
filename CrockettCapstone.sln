@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrockettWeb", "CrockettWeb\CrockettWeb.csproj", "{C041B683-4B39-4E50-96B0-AEB547E30B87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{DD951679-6E30-4060-9B7C-2FBF8E102652}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{C041B683-4B39-4E50-96B0-AEB547E30B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C041B683-4B39-4E50-96B0-AEB547E30B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C041B683-4B39-4E50-96B0-AEB547E30B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD951679-6E30-4060-9B7C-2FBF8E102652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD951679-6E30-4060-9B7C-2FBF8E102652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD951679-6E30-4060-9B7C-2FBF8E102652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD951679-6E30-4060-9B7C-2FBF8E102652}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

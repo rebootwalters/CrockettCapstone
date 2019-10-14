@@ -141,9 +141,9 @@ namespace DataAccessLayer
             {
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@RoleName", RoleName);
+                object itemReturned = command.ExecuteScalar();
 
-
-                proposedReturnValue = Convert.ToInt32(command.ExecuteScalar());
+                proposedReturnValue = Convert.ToInt32(itemReturned);
             }
             return proposedReturnValue;
         }
