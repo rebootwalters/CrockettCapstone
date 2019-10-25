@@ -17,5 +17,13 @@ namespace CrockettWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Acquire_RequestState()
+        {
+            string User = Session["AUTHUser"] as string;
+            string roles = Session["AUTHRoles"] as string;
+            string How = Session["AUTH"]
+            
+        }
     }
 }
