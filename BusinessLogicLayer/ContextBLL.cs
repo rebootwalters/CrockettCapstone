@@ -72,6 +72,11 @@ namespace BusinessLogicLayer
 
         #region User stuff
 
+        public int UserCreate(int UserID, string EMail, string Hash, string Salt, int RoleID)
+        {
+            return _context.UserCreate( EMail, Hash, Salt, RoleID);
+        }
+
         public List<UserBLL> UserGetAll(int skip, int take)
         {
             List<UserBLL> ProposedReturnValue = new List<UserBLL>();
@@ -103,6 +108,11 @@ namespace BusinessLogicLayer
             _context.UserUpdateJust(UserID, EMail, Hash, Salt, RoleID);
         }
 
+
+        public void UserUpdateJust(UserBLL u)
+        {
+            UserUpdateJust(u.UserID, u.EMail, u.Hash, u.Salt, u.RoleID);
+        }
         public void UserDelete(int UserID)
         {
             _context.UserDelete(UserID);

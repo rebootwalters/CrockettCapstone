@@ -16,8 +16,14 @@ namespace CrockettWeb
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+
+            routes.MapRoute(
+                name: "Pageing",
+                url: "{controller}/Page/{PN}/{PS}",
+                defaults: new { controller = "Home", action = "PAGE",
+                PN = "0", PS="3"});
+            
         }
     }
 }
