@@ -187,10 +187,6 @@
       <Project>{dd951679-6e30-4060-9b7c-2fbf8e102652}</Project>
       <Name>BusinessLogicLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
-      <Project>{21fbf7a0-b0d2-496c-8d9f-79684a20b77c}</Project>
-      <Name>DataAccessLayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

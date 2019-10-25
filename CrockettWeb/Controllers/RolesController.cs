@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DataAccessLayer;
+
 using BusinessLogicLayer;
 
 namespace CrockettWeb.Controllers
@@ -25,10 +25,10 @@ namespace CrockettWeb.Controllers
         // GET: Roles/Details/5
         public ActionResult Details(int id)
         {
-            RoleDAL it = null;
-            using (DataAccessLayer.ContextDAL ctx = new DataAccessLayer.ContextDAL())
+            RoleBLL it = null;
+            using (ContextBLL ctx = new ContextBLL())
             {
-                ctx.ConnectionString = @"Data Source=.\sqlexpress;Initial Catalog=Crockett;Integrated Security=True";
+              
                 it = ctx.RoleFindByID(id);
             }
             return View(it);
@@ -59,10 +59,10 @@ namespace CrockettWeb.Controllers
         // GET: Roles/Edit/5
         public ActionResult Edit(int id)
         {
-            RoleDAL item;
-            using (ContextDAL ctx = new ContextDAL())
+            RoleBLL item;
+            using (ContextBLL ctx = new ContextBLL())
             {
-                ctx.ConnectionString = @"Data Source=.\sqlexpress;Initial Catalog=Crockett;Integrated Security=True";
+              
                 item = ctx.RoleFindByID(id);
             }
             return View(item);
