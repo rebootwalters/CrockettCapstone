@@ -42,17 +42,20 @@ namespace CrockettWeb.Controllers
 
         // POST: Roles/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(RoleBLL collection)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    ctx.RoleCreate(collection.RoleName);
+                }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error",ex);
             }
         }
 
@@ -70,39 +73,51 @@ namespace CrockettWeb.Controllers
 
         // POST: Roles/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id,RoleBLL collection)
         {
             try
             {
-                // TODO: Add update logic here
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    ctx.RoleJustUpdate(id,collection.RoleName);
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error", ex);
             }
         }
 
         // GET: Roles/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            RoleBLL item;
+            using (ContextBLL ctx = new ContextBLL())
+            {
+
+                item = ctx.RoleFindByID(id);
+            }
+            return View(item);
         }
 
         // POST: Roles/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, RoleBLL collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                using (ContextBLL ctx = new ContextBLL())
+                {
+                    ctx.RoleDelete(id);
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error", ex);
             }
         }
     }
